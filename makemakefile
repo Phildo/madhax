@@ -1,0 +1,46 @@
+SRCDIR = src
+TESTDIR = tests
+ODIR = out
+BINDIR = bin
+OUT = $(BINDIR)/app
+TOUT = $(BINDIR)/test
+TESTS = $(ODIR)/tests.o $(ODIR)/fixed_vector_test.o
+CC = g++
+DEBUG = -g
+DEBUGGER = gdb
+CFLAGS = -Wall -c `sdl-config --cflags` $(DEBUG)
+LFLAGS = -Wall `sdl-config --libs` -lSDL_image $(DEBUG)
+
+#MAKEMAKE<
+#MAKEMAKE>
+
+makemake : 
+	makemake $(SRCDIR)/*.cpp
+
+tags : 
+	ctags $(SRCDIR)/*.cpp -f $(SRCDIR)/tags
+
+debug : $(OUT)
+	$(DEBUGGER) $(OUT)
+
+clean : 
+	\rm -rf $(ODIR)/*.o $(OUT)
+
+go : $(OUT)
+	$(OUT)
+
+scratch : clean go
+	
+
+test: $(TOUT)
+	
+
+rtest : $(TOUT)
+	$(TOUT)
+
+$(TOUT): $(TESTS)
+	$(CC) $(LFLAGS) $(TESTS) -o $(TOUT)
+
+$(ODIR)/tests.o : $(TESTDIR)/tests.cpp
+	$(CC) $(CFLAGS) $(TESTDIR)/tests.cpp -o $(ODIR)/tests.o
+

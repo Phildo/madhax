@@ -1,0 +1,5 @@
+.DS_Store
+mazer
+*.o
+*.out
+*.tar.gz
